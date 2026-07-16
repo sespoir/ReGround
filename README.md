@@ -1,15 +1,3 @@
-<div align="center">
-
-# ReGround
-
-**Restoring visual grounding through self-diagnosis and visual re-examination**
-
-<br>
-
-`Reason` → `Diagnose` → `<reground>` → `Re-examine` → `Answer`
-
-</div>
-
 ## ✨ Overview
 
 Vision-language models can gradually lose visual grounding during long reasoning chains. **ReGround** teaches a model to diagnose when its reasoning needs fresh visual evidence and to selectively re-examine the image.

@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="#-paper"><img src="https://img.shields.io/badge/Paper-Coming%20Soon-6C63FF?style=flat-square" alt="Paper: Coming Soon"></a>
-  <a href="#-citation"><img src="https://img.shields.io/badge/BibTeX-Coming%20Soon-475569?style=flat-square" alt="BibTeX: Coming Soon"></a>
+  <a href="#-paper"><img src="https://img.shields.io/badge/Paper-Coming%20Soon-6C63FF?style=flat-square" alt="Paper: Coming Soon"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="#-citation"><img src="https://img.shields.io/badge/BibTeX-Coming%20Soon-475569?style=flat-square" alt="BibTeX: Coming Soon"></a>&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-ReGround-FFD21E?style=flat-square" alt="ReGround model on Hugging Face"></a>
 </p>
 
@@ -23,21 +23,10 @@ ReGround constructs self-diagnosis trajectories, initializes the policy with sup
 ## 📈 Results
 
 <p align="center">
-  <img src="assets/benchmark_radar.svg" width="760" alt="Radar chart comparing ReGround with the Qwen2.5-VL-7B base model across eight benchmarks">
+  <img src="assets/benchmark_radar.svg" width="780" alt="Radar chart comparing ReGround with Qwen2.5-VL-7B baselines across eight benchmarks">
 </p>
 
-| Benchmark | Qwen2.5-VL-7B | ReGround | Improvement |
-| --- | ---: | ---: | ---: |
-| MathVista | 68.2 | **72.0** | +3.8 |
-| MathVision | 27.0 | **29.8** | +2.8 |
-| MathVerse | 35.5 | **40.0** | +4.5 |
-| MMBench | 82.6 | **83.8** | +1.2 |
-| MMStar | 64.7 | **67.6** | +2.9 |
-| HallusionBench | 64.7 | **71.5** | +6.8 |
-| VisuLogic | 20.0 | **23.6** | +3.6 |
-| V*Bench | 78.2 | **83.2** | +5.0 |
-
-Scores follow each benchmark's official evaluation protocol; higher is better.
+<p align="center"><sub>Direct comparison of Qwen2.5-VL-7B methods from the main results table. Scores follow each benchmark's official evaluation protocol; higher is better.</sub></p>
 
 ## 🛠️ Setup
 

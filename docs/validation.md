@@ -1,11 +1,11 @@
 # Validation run
 
 Validation was repeated on 2026-07-16 with vLLM 0.11.2 V1 and one NVIDIA
-A100 80 GB GPU. The tested artifact was the step-832 checkpoint from the
-`0716_text_only` training run:
+A100 80 GB GPU. The selected SFT checkpoint is represented by the portable
+placeholder path below:
 
 ```text
-0716_text_only/checkpoint-832
+/tmp/reground/models/qwen2.5-vl-reground
 ```
 
 The checkpoint was served as `qwen2_5-vl-reground` through an isolated vLLM
@@ -77,11 +77,10 @@ The official HallusionBench aggregate scores were:
 Exact matching extracted 693 correct answers out of 951. Nineteen predictions
 could not be normalized to Yes/No and were scored as `Unknown`; there were no
 unrecovered API failures. The full score CSV, prediction workbook, auxiliary
-matching workbook, token log, and per-round output log are retained in the
-ignored `outputs/hallusionbench_checkpoint832_full_20260716_2250/` and
-`token_logs/hallusionbench_checkpoint832_full_20260716_2250/` directories.
+matching workbook, token log, and per-round output log are retained in ignored
+local output directories.
 
-This full result establishes that checkpoint-832 can trigger and complete the
-natural two-round reground path. The malformed mixed closing tags in the
-training JSONL remain a data-quality issue and should still be corrected for a
-future training run.
+This full result establishes that the selected SFT checkpoint can trigger and
+complete the natural two-round reground path. The malformed mixed closing tags
+in the training JSONL remain a data-quality issue and should still be corrected
+for a future training run.

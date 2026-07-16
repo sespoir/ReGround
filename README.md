@@ -18,7 +18,7 @@ conda activate reground
 The setup script creates a private `.env` file. Add the local checkpoint path and adjust the GPU settings if needed:
 
 ```bash
-QWEN_MODEL_PATH=/absolute/path/to/checkpoint
+QWEN_MODEL_PATH=/tmp/reground/models/qwen2.5-vl-reground
 TENSOR_PARALLEL_SIZE=1
 ```
 
@@ -27,6 +27,21 @@ TENSOR_PARALLEL_SIZE=1
 The dataset-agnostic generator in `data_generation/generate_sft.py` accepts JSON, JSONL, or Parquet records and uses OpenAI-compatible policy and teacher models to construct ReGround supervision. It routes samples according to answer correctness, visual grounding quality, and stochastic verification into Correction, Grounding, Verification, or No-ReGround trajectories.
 
 The resulting single- and two-round conversations follow the `<think>`, `<reground>`, and `<answer>` format used for SFT. Run the pipeline with `data_generation/run_generation.sh`; field mappings, concurrency, checkpointing, and resume behavior can be configured through command-line options or environment variables.
+
+## 🏋️ SFT Training
+
+Stage 1 uses full-parameter supervised fine-tuning with LLaMA-Factory and DeepSpeed ZeRO-3. The public configuration matches the supplementary material: 2.5 epochs, an 8K context length, bf16 precision, a cosine learning-rate schedule with a peak rate of `8e-6`, and a per-device batch size of 1 with 6 gradient-accumulation steps.
+
+The paths under `/tmp/reground` are placeholders. Replace the model directory, copy the generated SFT data and dataset registration file, then launch training:
+
+```bash
+mkdir -p /tmp/reground/data
+cp /tmp/reground/generated/sft.jsonl /tmp/reground/data/sft.jsonl
+cp training/dataset_info.json /tmp/reground/data/dataset_info.json
+bash training/run_sft.sh
+```
+
+The reported run used 32 A100-80G GPUs. For multi-node reproduction, set the LLaMA-Factory launcher variables such as `NNODES`, `NODE_RANK`, `MASTER_ADDR`, and `MASTER_PORT` before running the same script.
 
 ## 🚀 Inference
 

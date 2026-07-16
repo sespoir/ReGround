@@ -4,7 +4,11 @@ Vision-language models can gradually lose visual grounding during long reasoning
 
 At inference time, the model emits `<reground>` when re-examination is needed. The same image is then re-injected into the conversation, allowing the model to revise its reasoning before producing the final answer. ReGround requires no external visual tools or architecture changes.
 
-This repository provides the inference and evaluation implementation for Qwen2.5-VL, built with [vLLM](https://github.com/vllm-project/vllm) and [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
+This repository provides data construction, inference, and evaluation code for Qwen2.5-VL, built with [vLLM](https://github.com/vllm-project/vllm) and [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
+
+## 🧩 Data Construction
+
+`data_generation/generate_sft.py` constructs Correction, Grounding, Verification, and No-ReGround trajectories from JSON, JSONL, or Parquet inputs. Configure OpenAI-compatible policy and teacher endpoints, then run `data_generation/run_generation.sh`.
 
 ## 🛠️ Setup
 
@@ -54,7 +58,7 @@ The default configuration evaluates `HallusionBench` with exact matching. For Sl
 ## 🧪 Tests
 
 ```bash
-ruff check src scripts tests
+ruff check src scripts tests data_generation
 python tests/test_reground_payload.py
 bash scripts/secret_scan.sh
 ```

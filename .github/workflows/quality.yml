@@ -21,13 +21,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ripgrep
-          python -m pip install ruff==0.15.0 requests pillow
+          python -m pip install ruff==0.15.0 requests pillow httpx tqdm
       - name: Check shell syntax
-        run: bash -n scripts/*.sh jobs/*.sbatch
+        run: bash -n scripts/*.sh jobs/*.sbatch data_generation/*.sh
       - name: Lint Python
-        run: ruff check src scripts tests
+        run: ruff check src scripts tests data_generation
       - name: Check Python syntax
-        run: python -m py_compile src/*.py scripts/*.py tests/*.py
+        run: python -m py_compile src/*.py scripts/*.py tests/*.py data_generation/*.py
       - name: Run offline payload contract tests
         run: python tests/test_reground_payload.py
       - name: Scan tracked files for likely secrets

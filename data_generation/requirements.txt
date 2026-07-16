@@ -1,0 +1,5 @@
+httpx
+Pillow
+tqdm
+pandas
+pyarrow

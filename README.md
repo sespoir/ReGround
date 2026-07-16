@@ -1,14 +1,14 @@
 <div align="center">
 
-# ReGround: Restoring Visual Grounding in Multi-Step Reasoning through Self-Diagnosis and Visual Re-Examination
+# ReGround
 
-### ACM Multimedia 2026
+**Restoring visual grounding through self-diagnosis and visual re-examination**
+
+<br>
+
+`Reason` → `Diagnose` → `<reground>` → `Re-examine` → `Answer`
 
 </div>
-
-<p align="center">
-  <img src="assets/reground_pipeline.png" alt="ReGround pipeline" width="100%">
-</p>
 
 ## ✨ Overview
 

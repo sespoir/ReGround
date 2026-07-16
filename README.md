@@ -1,10 +1,43 @@
+<p align="center">
+  <a href="#-paper"><img src="https://img.shields.io/badge/Paper-Coming%20Soon-6C63FF?style=flat-square" alt="Paper: Coming Soon"></a>
+  <a href="#-citation"><img src="https://img.shields.io/badge/BibTeX-Coming%20Soon-475569?style=flat-square" alt="BibTeX: Coming Soon"></a>
+  <a href="https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-ReGround-FFD21E?style=flat-square" alt="ReGround model on Hugging Face"></a>
+</p>
+
 ## ✨ Overview
 
 Vision-language models can gradually lose visual grounding during long reasoning chains. **ReGround** teaches a model to diagnose when its reasoning needs fresh visual evidence and to selectively re-examine the image.
 
 At inference time, the model emits `<reground>` when re-examination is needed. The same image is then re-injected into the conversation, allowing the model to revise its reasoning before producing the final answer. ReGround requires no external visual tools or architecture changes.
 
-This repository provides data construction, inference, and evaluation code for Qwen2.5-VL, built with [vLLM](https://github.com/vllm-project/vllm) and [VLMEvalKit](https://github.com/open-compass/VLMEvalKit). The Stage-1 SFT checkpoint is available on [Hugging Face](https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B-SFT).
+This repository provides data construction, training, inference, and evaluation code for Qwen2.5-VL, built with [veRL](https://github.com/verl-project/verl), [vLLM](https://github.com/vllm-project/vllm), and [VLMEvalKit](https://github.com/open-compass/VLMEvalKit). The final model, trained with Stage-1 SFT followed by Stage-2 GRPO, is available on [Hugging Face](https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B).
+
+## 🔍 Method
+
+<p align="center">
+  <img src="assets/reground_method.png" width="100%" alt="Overview of ReGround trajectory construction, model training, and two-round inference">
+</p>
+
+ReGround constructs self-diagnosis trajectories, initializes the policy with supervised fine-tuning, and refines its re-examination decisions with GRPO. At inference time, `<reground>` requests a fresh visual pass before the model produces its final answer.
+
+## 📈 Results
+
+<p align="center">
+  <img src="assets/benchmark_radar.svg" width="760" alt="Radar chart comparing ReGround with the Qwen2.5-VL-7B base model across eight benchmarks">
+</p>
+
+| Benchmark | Qwen2.5-VL-7B | ReGround | Improvement |
+| --- | ---: | ---: | ---: |
+| MathVista | 68.2 | **72.0** | +3.8 |
+| MathVision | 27.0 | **29.8** | +2.8 |
+| MathVerse | 35.5 | **40.0** | +4.5 |
+| MMBench | 82.6 | **83.8** | +1.2 |
+| MMStar | 64.7 | **67.6** | +2.9 |
+| HallusionBench | 64.7 | **71.5** | +6.8 |
+| VisuLogic | 20.0 | **23.6** | +3.6 |
+| V*Bench | 78.2 | **83.2** | +5.0 |
+
+Scores follow each benchmark's official evaluation protocol; higher is better.
 
 ## 🛠️ Setup
 
@@ -18,7 +51,7 @@ conda activate reground
 The setup script creates a private `.env` file. Use the Hugging Face model ID or a downloaded checkpoint path, and adjust the GPU settings if needed:
 
 ```bash
-QWEN_MODEL_PATH=SESPOIR/ReGround-Qwen2.5-VL-7B-SFT
+QWEN_MODEL_PATH=SESPOIR/ReGround-Qwen2.5-VL-7B
 TENSOR_PARALLEL_SIZE=1
 ```
 
@@ -103,6 +136,14 @@ python -m unittest discover -s tests -p 'test_*.py'
 bash -n scripts/*.sh jobs/*.sbatch data_generation/*.sh training/*.sh grpo/*.sh
 bash scripts/secret_scan.sh
 ```
+
+## 📄 Paper
+
+Coming Soon.
+
+## 📝 Citation
+
+Formal BibTeX: Coming Soon.
 
 ## 🙏 Acknowledgements
 

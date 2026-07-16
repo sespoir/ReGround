@@ -1,12 +1,9 @@
 # Validation run
 
 Validation was repeated on 2026-07-16 with vLLM 0.11.2 V1 and one NVIDIA
-A100 80 GB GPU. The selected SFT checkpoint is represented by the portable
-placeholder path below:
-
-```text
-/tmp/reground/models/qwen2.5-vl-reground
-```
+A100 80 GB GPU. The evaluated weights are the final ReGround checkpoint,
+trained with Stage-1 SFT followed by Stage-2 GRPO and released as
+[`SESPOIR/ReGround-Qwen2.5-VL-7B`](https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B).
 
 The checkpoint was served as `qwen2_5-vl-reground` through an isolated vLLM
 endpoint. A focused integration run and the full benchmark used separate
@@ -80,7 +77,7 @@ unrecovered API failures. The full score CSV, prediction workbook, auxiliary
 matching workbook, token log, and per-round output log are retained in ignored
 local output directories.
 
-This full result establishes that the selected SFT checkpoint can trigger and
+This full result establishes that the final ReGround checkpoint can trigger and
 complete the natural two-round reground path. The malformed mixed closing tags
 in the training JSONL remain a data-quality issue and should still be corrected
 for a future training run.

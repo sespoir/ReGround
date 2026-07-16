@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" role="img" aria-labelledby="title desc">
+  <title id="title">ReGround benchmark comparison</title>
+  <desc id="desc">Radar chart comparing ReGround with Qwen2.5-VL-7B on MathVista, MathVision, MathVerse, MMBench, MMStar, HallusionBench, VisuLogic, and V*Bench.</desc>
+  <rect x="1" y="1" width="898" height="638" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+
+  <g fill="none" stroke="#dbe2ea" stroke-width="1.4">
+    <polygon points="450,258 479.70,270.30 492,300 479.70,329.70 450,342 420.30,329.70 408,300 420.30,270.30"/>
+    <polygon points="450,216 509.40,240.60 534,300 509.40,359.40 450,384 390.60,359.40 366,300 390.60,240.60"/>
+    <polygon points="450,174 539.10,210.90 576,300 539.10,389.10 450,426 360.90,389.10 324,300 360.90,210.90"/>
+    <polygon points="450,132 568.79,181.21 618,300 568.79,418.79 450,468 331.21,418.79 282,300 331.21,181.21"/>
+    <polygon points="450,90 598.49,151.51 660,300 598.49,448.49 450,510 301.51,448.49 240,300 301.51,151.51"/>
+  </g>
+
+  <g stroke="#cbd5e1" stroke-width="1.3">
+    <line x1="450" y1="300" x2="450" y2="90"/>
+    <line x1="450" y1="300" x2="598.49" y2="151.51"/>
+    <line x1="450" y1="300" x2="660" y2="300"/>
+    <line x1="450" y1="300" x2="598.49" y2="448.49"/>
+    <line x1="450" y1="300" x2="450" y2="510"/>
+    <line x1="450" y1="300" x2="301.51" y2="448.49"/>
+    <line x1="450" y1="300" x2="240" y2="300"/>
+    <line x1="450" y1="300" x2="301.51" y2="151.51"/>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fill="#334155" font-size="16" font-weight="600">
+    <text x="450" y="53" text-anchor="middle">MathVista</text>
+    <text x="625" y="133" text-anchor="start">MathVision</text>
+    <text x="686" y="306" text-anchor="start">MathVerse</text>
+    <text x="622" y="482" text-anchor="start">MMBench</text>
+    <text x="450" y="551" text-anchor="middle">MMStar</text>
+    <text x="278" y="482" text-anchor="end">HallusionBench</text>
+    <text x="214" y="306" text-anchor="end">VisuLogic</text>
+    <text x="278" y="133" text-anchor="end">V*Bench</text>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fill="#94a3b8" font-size="12">
+    <text x="458" y="262">20</text>
+    <text x="458" y="220">40</text>
+    <text x="458" y="178">60</text>
+    <text x="458" y="136">80</text>
+    <text x="458" y="94">100</text>
+  </g>
+
+  <polygon points="450,156.78 490.09,259.91 524.55,300 572.65,422.65 450,435.87 353.92,396.08 408,300 333.88,183.88"
+           fill="#94a3b8" fill-opacity="0.16" stroke="#64748b" stroke-width="2.5" stroke-dasharray="7 5" stroke-linejoin="round"/>
+  <polygon points="450,148.80 494.25,255.75 534,300 574.44,424.44 450,441.96 343.83,406.17 400.44,300 326.45,176.45"
+           fill="#6366f1" fill-opacity="0.20" stroke="#4f46e5" stroke-width="3" stroke-linejoin="round"/>
+
+  <g fill="#4f46e5" stroke="#ffffff" stroke-width="2">
+    <circle cx="450" cy="148.80" r="4.5"/>
+    <circle cx="494.25" cy="255.75" r="4.5"/>
+    <circle cx="534" cy="300" r="4.5"/>
+    <circle cx="574.44" cy="424.44" r="4.5"/>
+    <circle cx="450" cy="441.96" r="4.5"/>
+    <circle cx="343.83" cy="406.17" r="4.5"/>
+    <circle cx="400.44" cy="300" r="4.5"/>
+    <circle cx="326.45" cy="176.45" r="4.5"/>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" fill="#334155">
+    <line x1="279" y1="594" x2="321" y2="594" stroke="#64748b" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text x="332" y="599">Qwen2.5-VL-7B</text>
+    <line x1="502" y1="594" x2="544" y2="594" stroke="#4f46e5" stroke-width="3"/>
+    <circle cx="523" cy="594" r="4" fill="#4f46e5" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="555" y="599" font-weight="700">ReGround</text>
+  </g>
+</svg>

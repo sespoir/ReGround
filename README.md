@@ -4,7 +4,7 @@ Vision-language models can gradually lose visual grounding during long reasoning
 
 At inference time, the model emits `<reground>` when re-examination is needed. The same image is then re-injected into the conversation, allowing the model to revise its reasoning before producing the final answer. ReGround requires no external visual tools or architecture changes.
 
-This repository provides data construction, inference, and evaluation code for Qwen2.5-VL, built with [vLLM](https://github.com/vllm-project/vllm) and [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
+This repository provides data construction, inference, and evaluation code for Qwen2.5-VL, built with [vLLM](https://github.com/vllm-project/vllm) and [VLMEvalKit](https://github.com/open-compass/VLMEvalKit). The Stage-1 SFT checkpoint is available on [Hugging Face](https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B-SFT).
 
 ## 🛠️ Setup
 
@@ -15,10 +15,10 @@ bash scripts/bootstrap.sh --with-server
 conda activate reground
 ```
 
-The setup script creates a private `.env` file. Add the local checkpoint path and adjust the GPU settings if needed:
+The setup script creates a private `.env` file. Use the Hugging Face model ID or a downloaded checkpoint path, and adjust the GPU settings if needed:
 
 ```bash
-QWEN_MODEL_PATH=/tmp/reground/models/qwen2.5-vl-reground
+QWEN_MODEL_PATH=SESPOIR/ReGround-Qwen2.5-VL-7B-SFT
 TENSOR_PARALLEL_SIZE=1
 ```
 

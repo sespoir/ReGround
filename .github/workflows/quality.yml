@@ -1,0 +1,36 @@
+name: quality
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+      - name: Install quality dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ripgrep
+          python -m pip install ruff==0.15.0 requests pillow
+      - name: Check shell syntax
+        run: bash -n scripts/*.sh jobs/*.sbatch
+      - name: Lint Python
+        run: ruff check src scripts tests
+      - name: Check Python syntax
+        run: python -m py_compile src/*.py scripts/*.py tests/*.py
+      - name: Run offline payload contract tests
+        run: python tests/test_reground_payload.py
+      - name: Scan tracked files for likely secrets
+        run: bash scripts/secret_scan.sh
+      - name: Check whitespace errors
+        run: git diff --check HEAD

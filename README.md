@@ -6,10 +6,6 @@ At inference time, the model emits `<reground>` when re-examination is needed. T
 
 This repository provides data construction, inference, and evaluation code for Qwen2.5-VL, built with [vLLM](https://github.com/vllm-project/vllm) and [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
 
-## 🧩 Data Construction
-
-`data_generation/generate_sft.py` constructs Correction, Grounding, Verification, and No-ReGround trajectories from JSON, JSONL, or Parquet inputs. Configure OpenAI-compatible policy and teacher endpoints, then run `data_generation/run_generation.sh`.
-
 ## 🛠️ Setup
 
 ```bash
@@ -25,6 +21,12 @@ The setup script creates a private `.env` file. Add the local checkpoint path an
 QWEN_MODEL_PATH=/absolute/path/to/checkpoint
 TENSOR_PARALLEL_SIZE=1
 ```
+
+## 🧩 Data Construction
+
+The dataset-agnostic generator in `data_generation/generate_sft.py` accepts JSON, JSONL, or Parquet records and uses OpenAI-compatible policy and teacher models to construct ReGround supervision. It routes samples according to answer correctness, visual grounding quality, and stochastic verification into Correction, Grounding, Verification, or No-ReGround trajectories.
+
+The resulting single- and two-round conversations follow the `<think>`, `<reground>`, and `<answer>` format used for SFT. Run the pipeline with `data_generation/run_generation.sh`; field mappings, concurrency, checkpointing, and resume behavior can be configured through command-line options or environment variables.
 
 ## 🚀 Inference
 

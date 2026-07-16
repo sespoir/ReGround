@@ -1,0 +1,6 @@
+- name: reground_agent
+  _target_: grpo.reground_agent_loop.ReGroundAgentLoop
+  max_generated_tokens: 1024
+  reexamination_prompt: >-
+    Based on your self-reflection, re-examine the image and provide the final
+    answer. Do not output <reground> again.

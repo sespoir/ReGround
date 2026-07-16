@@ -43,6 +43,29 @@ bash training/run_sft.sh
 
 The reported run used 32 A100-80G GPUs. For multi-node reproduction, set the LLaMA-Factory launcher variables such as `NNODES`, `NODE_RANK`, `MASTER_ADDR`, and `MASTER_PORT` before running the same script.
 
+## 🧭 GRPO Training
+
+Stage 2 starts from the Stage-1 checkpoint and uses GRPO in [veRL](https://github.com/verl-project/verl). The custom agent loop performs a genuine two-round rollout: when the policy emits `<reground>`, it appends a masked environment turn, re-injects the original image, and lets the same policy finish the trajectory. The reward implements the paper's self-diagnosis, answer-accuracy, and format components, including the four-quadrant values reported in the supplementary material.
+
+First convert generic visual-QA records into veRL Parquet files. Field names and answer indexing can be changed with command-line options:
+
+```bash
+python -m pip install -r grpo/requirements.txt
+python grpo/prepare_dataset.py \
+  --input /tmp/reground/raw/train.jsonl \
+  --output-dir /tmp/reground/data/grpo \
+  --image-root /tmp/reground/images
+```
+
+The public recipe is validated against veRL `v0.7.1` and mirrors the reported settings: 584 steps, group size 8, temperature `0.7`, learning rate `1e-6`, KL coefficient `0.01`, clip ratio `0.2`, and a 1,024-token policy-generation budget. Replace the `/tmp/reground` placeholders, prepare a 32-GPU Ray cluster if reproducing the paper setting, and launch:
+
+```bash
+git clone --branch v0.7.1 https://github.com/verl-project/verl.git /tmp/verl-v0.7.1
+VERL_ROOT=/tmp/verl-v0.7.1 bash grpo/run_grpo.sh
+```
+
+`data.max_response_length=4096` reserves room for the masked second image turn; `max_generated_tokens=1024` still enforces the paper's policy-token limit across both rounds. To validate the complete Hydra configuration without starting Ray or using a GPU, set `REGROUND_GRPO_CONFIG_ONLY=true`.
+
 ## 🚀 Inference
 
 Start the OpenAI-compatible vLLM server:
@@ -75,8 +98,9 @@ The default configuration evaluates `HallusionBench` with exact matching. For Sl
 ## 🧪 Tests
 
 ```bash
-ruff check src scripts tests data_generation
-python tests/test_reground_payload.py
+ruff check src scripts tests data_generation grpo
+python -m unittest discover -s tests -p 'test_*.py'
+bash -n scripts/*.sh jobs/*.sbatch data_generation/*.sh training/*.sh grpo/*.sh
 bash scripts/secret_scan.sh
 ```
 

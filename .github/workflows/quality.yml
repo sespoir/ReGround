@@ -23,13 +23,13 @@ jobs:
           sudo apt-get install -y ripgrep
           python -m pip install ruff==0.15.0 requests pillow httpx tqdm
       - name: Check shell syntax
-        run: bash -n scripts/*.sh jobs/*.sbatch data_generation/*.sh training/*.sh
+        run: bash -n scripts/*.sh jobs/*.sbatch data_generation/*.sh training/*.sh grpo/*.sh
       - name: Lint Python
-        run: ruff check src scripts tests data_generation
+        run: ruff check src scripts tests data_generation grpo
       - name: Check Python syntax
-        run: python -m py_compile src/*.py scripts/*.py tests/*.py data_generation/*.py
-      - name: Run offline payload contract tests
-        run: python tests/test_reground_payload.py
+        run: python -m py_compile src/*.py scripts/*.py tests/*.py data_generation/*.py grpo/*.py
+      - name: Run offline tests
+        run: python -m unittest discover -s tests -p 'test_*.py'
       - name: Scan tracked files for likely secrets
         run: bash scripts/secret_scan.sh
       - name: Check whitespace errors

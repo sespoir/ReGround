@@ -23,10 +23,10 @@ ReGround constructs self-diagnosis trajectories, initializes the policy with sup
 ## 📈 Results
 
 <p align="center">
-  <img src="assets/benchmark_radar.svg" width="780" alt="Radar chart comparing ReGround with Qwen2.5-VL-7B baselines across eight benchmarks">
+  <img src="assets/benchmark_dumbbell.svg" width="880" alt="Per-benchmark dumbbell plot comparing ReGround with Qwen2.5-VL-7B baselines across eight benchmarks">
 </p>
 
-<p align="center"><sub>Direct comparison of Qwen2.5-VL-7B methods from the main results table. Scores follow each benchmark's official evaluation protocol; higher is better.</sub></p>
+<p align="center"><sub>Direct comparison of Qwen2.5-VL-7B methods across eight benchmarks. Each row is scaled to its own min–max range so small gaps stay visible; grey numbers at the ends are absolute scores. Scores follow each benchmark's official evaluation protocol; higher is better.</sub></p>
 
 ## 🛠️ Setup
 

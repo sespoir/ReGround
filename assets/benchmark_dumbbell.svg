@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="664" viewBox="0 0 980 664" role="img" aria-labelledby="title desc" font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <title id="title">ReGround benchmark comparison</title>
+  <desc id="desc">Per-benchmark dumbbell plot comparing Base, R1-VL, Thyme, Look-Back, Qwen-LookAgain, and ReGround on the Qwen2.5-VL-7B backbone across eight benchmarks. Each row is scaled to its own score range; the grey numbers at the two ends of each row are the minimum and maximum absolute scores.</desc>
+  <rect x="1" y="1" width="978" height="662" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="490" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Benchmark comparison on Qwen2.5-VL-7B</text>
+  <text x="490" y="72" text-anchor="middle" font-size="13" fill="#64748b">Each row is scaled to its own min–max range so small gaps are visible; grey numbers at the ends are absolute scores.</text>
+  <rect x="20" y="108" width="940" height="58" fill="#f8fafc"/>
+  <text x="150" y="142" text-anchor="end" font-size="15" font-weight="600" fill="#334155">MathVista</text>
+  <line x1="300" y1="137" x2="832" y2="137" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="521.7" y1="137" x2="780.5" y2="137" stroke="#c7d2fe" stroke-width="6" stroke-linecap="round"/>
+  <text x="286" y="141" text-anchor="end" font-size="11.5" fill="#94a3b8">65.7</text>
+  <text x="846" y="141" text-anchor="start" font-size="11.5" fill="#94a3b8">72.0</text>
+  <circle cx="521.7" cy="137" r="5.2" fill="#64748b" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="351.5" cy="137" r="5.2" fill="#d97706" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="644.3" cy="137" r="5.2" fill="#059669" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="698.8" cy="137" r="5.2" fill="#0284c7" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="630.7" cy="137" r="5.2" fill="#db2777" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="780.5" cy="137" r="8" fill="#4f46e5" stroke="#ffffff" stroke-width="2.2"/>
+  <text x="780.5" y="124" text-anchor="middle" font-size="12" font-weight="700" fill="#4f46e5">72.0</text>
+  <text x="150" y="200" text-anchor="end" font-size="15" font-weight="600" fill="#334155">MathVision</text>
+  <line x1="300" y1="195" x2="832" y2="195" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="545.0" y1="195" x2="780.5" y2="195" stroke="#c7d2fe" stroke-width="6" stroke-linecap="round"/>
+  <text x="286" y="199" text-anchor="end" font-size="11.5" fill="#94a3b8">24.7</text>
+  <text x="846" y="199" text-anchor="start" font-size="11.5" fill="#94a3b8">29.8</text>
+  <circle cx="545.0" cy="195" r="5.2" fill="#64748b" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="351.5" cy="195" r="5.2" fill="#d97706" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="595.4" cy="195" r="5.2" fill="#059669" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="662.7" cy="195" r="5.2" fill="#0284c7" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="494.5" cy="195" r="5.2" fill="#db2777" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="780.5" cy="195" r="8" fill="#4f46e5" stroke="#ffffff" stroke-width="2.2"/>
+  <text x="780.5" y="182" text-anchor="middle" font-size="12" font-weight="700" fill="#4f46e5">29.8</text>
+  <rect x="20" y="224" width="940" height="58" fill="#f8fafc"/>
+  <text x="150" y="258" text-anchor="end" font-size="15" font-weight="600" fill="#334155">MathVerse</text>
+  <line x1="300" y1="253" x2="832" y2="253" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="351.5" y1="253" x2="780.5" y2="253" stroke="#c7d2fe" stroke-width="6" stroke-linecap="round"/>
+  <text x="286" y="257" text-anchor="end" font-size="11.5" fill="#94a3b8">35.5</text>
+  <text x="846" y="257" text-anchor="start" font-size="11.5" fill="#94a3b8">40.0</text>
+  <circle cx="351.5" cy="253" r="5.2" fill="#64748b" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="551.7" cy="253" r="5.2" fill="#d97706" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="694.7" cy="253" r="5.2" fill="#059669" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="675.6" cy="253" r="5.2" fill="#0284c7" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="570.8" cy="253" r="5.2" fill="#db2777" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="780.5" cy="253" r="8" fill="#4f46e5" stroke="#ffffff" stroke-width="2.2"/>
+  <text x="780.5" y="240" text-anchor="middle" font-size="12" font-weight="700" fill="#4f46e5">40.0</text>
+  <text x="150" y="316" text-anchor="end" font-size="15" font-weight="600" fill="#334155">MMBench</text>
+  <line x1="300" y1="311" x2="832" y2="311" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="351.5" y1="311" x2="747.5" y2="311" stroke="#c7d2fe" stroke-width="6" stroke-linecap="round"/>
+  <text x="286" y="315" text-anchor="end" font-size="11.5" fill="#94a3b8">82.6</text>
+  <text x="846" y="315" text-anchor="start" font-size="11.5" fill="#94a3b8">83.9</text>
+  <circle cx="351.5" cy="311" r="5.2" fill="#64748b" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="516.5" cy="311" r="5.2" fill="#d97706" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="615.5" cy="311" r="5.2" fill="#059669" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="780.5" cy="311" r="5.2" fill="#0284c7" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="417.5" cy="311" r="5.2" fill="#db2777" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="747.5" cy="311" r="8" fill="#4f46e5" stroke="#ffffff" stroke-width="2.2"/>
+  <text x="747.5" y="298" text-anchor="middle" font-size="12" font-weight="700" fill="#4f46e5">83.8</text>
+  <rect x="20" y="340" width="940" height="58" fill="#f8fafc"/>
+  <text x="150" y="374" text-anchor="end" font-size="15" font-weight="600" fill="#334155">MMStar</text>
+  <line x1="300" y1="369" x2="832" y2="369" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="616.8" y1="369" x2="780.5" y2="369" stroke="#c7d2fe" stroke-width="6" stroke-linecap="round"/>
+  <text x="286" y="373" text-anchor="end" font-size="11.5" fill="#94a3b8">60.0</text>
+  <text x="846" y="373" text-anchor="start" font-size="11.5" fill="#94a3b8">67.6</text>
+  <circle cx="616.8" cy="369" r="5.2" fill="#64748b" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="351.5" cy="369" r="5.2" fill="#d97706" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="684.5" cy="369" r="5.2" fill="#059669" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="735.4" cy="369" r="5.2" fill="#0284c7" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="684.5" cy="369" r="5.2" fill="#db2777" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="780.5" cy="369" r="8" fill="#4f46e5" stroke="#ffffff" stroke-width="2.2"/>
+  <text x="780.5" y="356" text-anchor="middle" font-size="12" font-weight="700" fill="#4f46e5">67.6</text>
+  <text x="150" y="432" text-anchor="end" font-size="15" font-weight="600" fill="#334155">HallusionBench</text>
+  <line x1="300" y1="427" x2="832" y2="427" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="351.5" y1="427" x2="780.5" y2="427" stroke="#c7d2fe" stroke-width="6" stroke-linecap="round"/>
+  <text x="286" y="431" text-anchor="end" font-size="11.5" fill="#94a3b8">64.7</text>
+  <text x="846" y="431" text-anchor="start" font-size="11.5" fill="#94a3b8">71.5</text>
+  <circle cx="351.5" cy="427" r="5.2" fill="#64748b" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="610.2" cy="427" r="5.2" fill="#d97706" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="749.0" cy="427" r="5.2" fill="#059669" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="673.3" cy="427" r="5.2" fill="#0284c7" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="635.4" cy="427" r="5.2" fill="#db2777" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="780.5" cy="427" r="8" fill="#4f46e5" stroke="#ffffff" stroke-width="2.2"/>
+  <text x="780.5" y="414" text-anchor="middle" font-size="12" font-weight="700" fill="#4f46e5">71.5</text>
+  <rect x="20" y="456" width="940" height="58" fill="#f8fafc"/>
+  <text x="150" y="490" text-anchor="end" font-size="15" font-weight="600" fill="#334155">VisuLogic</text>
+  <line x1="300" y1="485" x2="832" y2="485" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="351.5" y1="485" x2="757.9" y2="485" stroke="#c7d2fe" stroke-width="6" stroke-linecap="round"/>
+  <text x="286" y="489" text-anchor="end" font-size="11.5" fill="#94a3b8">20.0</text>
+  <text x="846" y="489" text-anchor="start" font-size="11.5" fill="#94a3b8">23.8</text>
+  <circle cx="351.5" cy="485" r="5.2" fill="#64748b" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="611.2" cy="485" r="5.2" fill="#d97706" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="735.4" cy="485" r="5.2" fill="#059669" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="780.5" cy="485" r="5.2" fill="#0284c7" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="645.0" cy="485" r="5.2" fill="#db2777" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="757.9" cy="485" r="8" fill="#4f46e5" stroke="#ffffff" stroke-width="2.2"/>
+  <text x="757.9" y="472" text-anchor="middle" font-size="12" font-weight="700" fill="#4f46e5">23.6</text>
+  <text x="150" y="548" text-anchor="end" font-size="15" font-weight="600" fill="#334155">V*Bench</text>
+  <line x1="300" y1="543" x2="832" y2="543" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="351.5" y1="543" x2="756.2" y2="543" stroke="#c7d2fe" stroke-width="6" stroke-linecap="round"/>
+  <text x="286" y="547" text-anchor="end" font-size="11.5" fill="#94a3b8">78.2</text>
+  <text x="846" y="547" text-anchor="start" font-size="11.5" fill="#94a3b8">83.5</text>
+  <circle cx="351.5" cy="543" r="5.2" fill="#64748b" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="594.3" cy="543" r="5.2" fill="#d97706" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="780.5" cy="543" r="5.2" fill="#059669" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="723.9" cy="543" r="5.2" fill="#0284c7" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="610.5" cy="543" r="5.2" fill="#db2777" fill-opacity="0.9" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="756.2" cy="543" r="8" fill="#4f46e5" stroke="#ffffff" stroke-width="2.2"/>
+  <text x="756.2" y="530" text-anchor="middle" font-size="12" font-weight="700" fill="#4f46e5">83.2</text>
+  <circle cx="70" cy="624" r="5.2" fill="#64748b" stroke="#ffffff" stroke-width="1.6"/>
+  <text x="83" y="629" font-size="13.5" fill="#334155" font-weight="400">Base</text>
+  <circle cx="143.8" cy="624" r="5.2" fill="#d97706" stroke="#ffffff" stroke-width="1.6"/>
+  <text x="156.8" y="629" font-size="13.5" fill="#334155" font-weight="400">R1-VL</text>
+  <circle cx="225.8" cy="624" r="5.2" fill="#059669" stroke="#ffffff" stroke-width="1.6"/>
+  <text x="238.8" y="629" font-size="13.5" fill="#334155" font-weight="400">Thyme</text>
+  <circle cx="307.8" cy="624" r="5.2" fill="#0284c7" stroke="#ffffff" stroke-width="1.6"/>
+  <text x="320.8" y="629" font-size="13.5" fill="#334155" font-weight="400">Look-Back</text>
+  <circle cx="422.6" cy="624" r="5.2" fill="#db2777" stroke="#ffffff" stroke-width="1.6"/>
+  <text x="435.6" y="629" font-size="13.5" fill="#334155" font-weight="400">Qwen-LookAgain</text>
+  <circle cx="578.4" cy="624" r="7" fill="#4f46e5" stroke="#ffffff" stroke-width="2.2"/>
+  <text x="591.4" y="629" font-size="13.5" fill="#334155" font-weight="700">ReGround</text>
+</svg>

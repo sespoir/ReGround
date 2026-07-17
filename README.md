@@ -10,7 +10,7 @@
 ## 🔥 News
 
 - **[2026.07.10]** 🎉 ReGround has been accepted to **ACM MM 2026**!
-- **[2026.06.13]** ReGround is supported by VLMEvalKit and LMMs-Eval. Feel free to use it without hesitation!
+- **[2026.06.13]** ReGround is supported by [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) and [LMMs-Eval](https://github.com/EvolvingLMMs-Lab/lmms-eval). Feel free to use it without hesitation!
 
 ## ✨ Overview
 

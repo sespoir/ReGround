@@ -15,5 +15,4 @@ checkpoint-*/
 __pycache__/
 *.py[cod]
 .DS_Store
-/1181_ReGround_Restoring_Visual.pdf
-/supplementary.pdf
+*.pdf

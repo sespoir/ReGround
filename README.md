@@ -140,7 +140,18 @@ Coming Soon.
 
 ## 📝 Citation
 
-Formal BibTeX: Coming Soon.
+If you find ReGround useful in your research, please consider citing:
+
+```bibtex
+@inproceedings{peng2026reground,
+  title     = {ReGround: Restoring Visual Grounding in Multi-Step Reasoning
+               through Self-Diagnosis and Visual Re-Examination},
+  author    = {Peng, Lei and Lv, Shuai and Hu, Wei},
+  booktitle = {Proceedings of the 34th ACM International Conference on Multimedia (ACM MM '26)},
+  year      = {2026},
+  note      = {To appear}
+}
+```
 
 ## 🙏 Acknowledgements
 

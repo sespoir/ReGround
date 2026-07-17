@@ -1,4 +1,4 @@
-<h1 align="center">ReGround: Restoring Visual Grounding in Multi-Step Reasoning through Self-Diagnosis and Visual Re-Examination</h1>
+<h2 align="center">ReGround: Restoring Visual Grounding in Multi-Step Reasoning through Self-Diagnosis and Visual Re-Examination</h2>
 
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/%F0%9F%8F%A0%20Home-Project%20Page-FF6F61?style=for-the-badge" alt="Project home page"></a>

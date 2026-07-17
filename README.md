@@ -1,10 +1,16 @@
+<h1 align="center">ReGround: Restoring Visual Grounding in Multi-Step Reasoning<br>through Self-Diagnosis and Visual Re-Examination</h1>
+
 <p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/%F0%9F%8F%A0%20Home-Project%20Page-FF6F61?style=flat-square" alt="Project home page"></a>&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/sespoir/ReGround"><img src="https://img.shields.io/badge/Code-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="Code on GitHub"></a>&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="#-paper"><img src="https://img.shields.io/badge/%F0%9F%93%84%20Paper-Coming%20Soon-6C63FF?style=flat-square" alt="Paper: Coming Soon"></a>&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="#-citation"><img src="https://img.shields.io/badge/%F0%9F%93%9A%20BibTeX-Coming%20Soon-475569?style=flat-square" alt="BibTeX: Coming Soon"></a>&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-ReGround-FFD21E?style=flat-square" alt="ReGround model on Hugging Face"></a>
+  <a href="#"><img src="https://img.shields.io/badge/%F0%9F%8F%A0%20Home-Project%20Page-FF6F61?style=for-the-badge" alt="Project home page"></a>
+  <a href="https://github.com/sespoir/ReGround"><img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Code on GitHub"></a>
+  <a href="#-paper"><img src="https://img.shields.io/badge/%F0%9F%93%84%20Paper-Coming%20Soon-6C63FF?style=for-the-badge" alt="Paper: Coming Soon"></a>
+  <a href="#-citation"><img src="https://img.shields.io/badge/%F0%9F%93%9A%20BibTeX-Coming%20Soon-475569?style=for-the-badge" alt="BibTeX: Coming Soon"></a>
+  <a href="https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-ReGround-FFD21E?style=for-the-badge" alt="ReGround model on Hugging Face"></a>
 </p>
+
+## 🔥 News
+
+- **[2026.07.10]** 🎉 ReGround has been accepted to **ACM MM 2026**!
 
 ## ✨ Overview
 

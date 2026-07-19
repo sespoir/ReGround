@@ -3,7 +3,7 @@
 
 The answer field is expected to contain the output of the same VLMEvalKit
 dataset parser used for final scoring. This script packages those canonical
-values and accepted aliases; it does not introduce a second benchmark parser.
+values and accepted aliases.
 """
 
 from __future__ import annotations

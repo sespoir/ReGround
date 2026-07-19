@@ -7,11 +7,10 @@ The implementation follows the paper's Stage-2 reward:
         + lambda_form * R_form
 
 where ``R_form`` is -1 for malformed output and 0 otherwise. Both online
-indicators are deterministic: ``I_reg`` checks only the trajectory structure,
-and ``I_acc`` compares answer values after the same VLMEvalKit parsing stage
-used for final scoring. No model-based judge is called during GRPO. With the
-supplementary hyperparameters, the four valid-format quadrants round to 1.0,
-0.6, 0.4, and -0.1.
+indicators are deterministic: ``I_reg`` checks the trajectory structure, and
+``I_acc`` compares answer values after the same VLMEvalKit parsing stage used
+for final scoring. With the supplementary hyperparameters, the four
+valid-format quadrants round to 1.0, 0.6, 0.4, and -0.1.
 """
 
 from __future__ import annotations

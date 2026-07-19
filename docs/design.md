@@ -43,8 +43,16 @@ The implementation performs at most one reground round.
 
 Final-answer extraction prefers `<answer>...</answer>`. It then considers text
 after `</think>`, text outside reasoning/reground blocks, multiple-choice
-letters, and numeric fallbacks. VLMEvalKit remains responsible for
-dataset-specific normalization and scoring.
+letters, and numeric fallbacks. The same VLMEvalKit parser used for final
+scoring remains responsible for dataset-specific extraction and normalization.
+The reward module's `answers_match` helper runs only after that parsing stage;
+it deterministically compares canonical choices or numeric values and is not a
+second parser or a learned judge.
+
+The online re-grounding indicator is likewise deterministic. It accepts
+exactly one non-empty, well-formed `<reground>` span at the template-defined
+position. It does not inspect diagnostic vocabulary or use a model judge, and
+additional text beyond the non-empty floor cannot increase the binary reward.
 
 ## Guarantees and non-guarantees
 

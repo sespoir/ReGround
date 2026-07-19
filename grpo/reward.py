@@ -6,9 +6,12 @@ The implementation follows the paper's Stage-2 reward:
         + lambda_acc * (I_acc - gamma * I_reg * I_acc - beta)
         + lambda_form * R_form
 
-where ``R_form`` is -1 for malformed output and 0 otherwise. With the
-supplementary hyperparameters, the four valid-format quadrants round to
-1.0, 0.6, 0.4, and -0.1.
+where ``R_form`` is -1 for malformed output and 0 otherwise. Both online
+indicators are deterministic: ``I_reg`` checks only the trajectory structure,
+and ``I_acc`` compares answer values after the same VLMEvalKit parsing stage
+used for final scoring. No model-based judge is called during GRPO. With the
+supplementary hyperparameters, the four valid-format quadrants round to 1.0,
+0.6, 0.4, and -0.1.
 """
 
 from __future__ import annotations
@@ -24,9 +27,6 @@ TAG_PATTERN = re.compile(r"<\s*(/?)\s*(think|reground|answer)\s*>", re.IGNORECAS
 ANSWER_PATTERN = re.compile(
     r"<\s*answer\s*>(.*?)<\s*/\s*answer\s*>", re.IGNORECASE | re.DOTALL
 )
-THINK_PATTERN = re.compile(
-    r"<\s*think\s*>(.*?)<\s*/\s*think\s*>", re.IGNORECASE | re.DOTALL
-)
 REGROUND_PATTERN = re.compile(
     r"<\s*reground\s*>(.*?)<\s*/\s*reground\s*>", re.IGNORECASE | re.DOTALL
 )
@@ -35,33 +35,17 @@ OPTION_PATTERN = re.compile(r"^(?:option\s*)?\(?([A-Z])\)?[\s.:)]*$", re.IGNOREC
 NUMBER_PATTERN = re.compile(
     r"^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?%?$"
 )
-
-DIAGNOSIS_TERMS = {
-    "check",
-    "confirm",
-    "count",
-    "diagram",
-    "examine",
-    "figure",
-    "focus",
-    "image",
-    "inspect",
-    "label",
-    "look",
-    "mark",
-    "object",
-    "position",
-    "read",
-    "recheck",
-    "relation",
-    "shape",
-    "verify",
-    "visual",
-}
-
-
-def _words(text: str) -> list[str]:
-    return re.findall(r"[A-Za-z0-9]+", text or "")
+DIRECT_TAG_SEQUENCE = ["think", "/think", "answer", "/answer"]
+TRIGGERED_TAG_SEQUENCE = [
+    "think",
+    "/think",
+    "reground",
+    "/reground",
+    "think",
+    "/think",
+    "answer",
+    "/answer",
+]
 
 
 def _tag_sequence(text: str) -> list[str]:
@@ -72,35 +56,25 @@ def _tag_sequence(text: str) -> list[str]:
 
 
 def _format_valid(text: str, answer: str, max_answer_chars: int) -> bool:
-    direct = ["think", "/think", "answer", "/answer"]
-    triggered = [
-        "think",
-        "/think",
-        "reground",
-        "/reground",
-        "think",
-        "/think",
-        "answer",
-        "/answer",
-    ]
-    return bool(answer) and len(answer) <= max_answer_chars and _tag_sequence(text) in (direct, triggered)
-
-
-def _genuine_reground(text: str, min_diagnosis_words: int) -> bool:
-    if not has_reground_marker(text):
-        return False
-    thinks = THINK_PATTERN.findall(text)
-    diagnoses = REGROUND_PATTERN.findall(text)
-    if not thinks or len(diagnoses) != 1:
-        return False
-    reasoning_words = _words(thinks[0])
-    diagnosis_words = _words(diagnoses[0])
-    diagnosis_terms = {word.lower() for word in diagnosis_words}
     return (
-        len(reasoning_words) >= min_diagnosis_words
-        and len(diagnosis_words) >= min_diagnosis_words
-        and bool(diagnosis_terms & DIAGNOSIS_TERMS)
+        bool(answer)
+        and len(answer) <= max_answer_chars
+        and _tag_sequence(text) in (DIRECT_TAG_SEQUENCE, TRIGGERED_TAG_SEQUENCE)
     )
+
+
+def _structurally_valid_reground(text: str, min_reground_chars: int) -> bool:
+    """Check one non-empty reground span at the template-defined position.
+
+    This intentionally does not score diagnostic semantics. The SFT prior and
+    KL anchor supply that behavior; the online indicator is binary, so longer
+    or padded content receives no additional reward.
+    """
+
+    if _tag_sequence(text) != TRIGGERED_TAG_SEQUENCE:
+        return False
+    diagnoses = REGROUND_PATTERN.findall(text)
+    return len(diagnoses) == 1 and len(diagnoses[0].strip()) >= min_reground_chars
 
 
 def _unwrap_answer(value: str) -> str:
@@ -157,7 +131,14 @@ def _choice_label(value: Any, choices: list[Any]) -> str | None:
 
 
 def answers_match(prediction: str, ground_truth: Any, extra_info: dict[str, Any] | None = None) -> bool:
-    """Compare free-form, numeric, or multiple-choice answers."""
+    """Compare prediction and target after VLMEvalKit answer parsing.
+
+    Dataset-specific extraction and normalization are performed by the same
+    VLMEvalKit parser used for final scoring before values enter the reward
+    pipeline. This helper is the deterministic post-parser comparison layer,
+    not a second benchmark parser and not a learned judge. It preserves
+    canonical choice aliases and numeric equivalence in the prepared records.
+    """
 
     extra_info = extra_info or {}
     accepted = _iter_answers(extra_info.get("accepted_answers")) or _iter_answers(ground_truth)
@@ -194,16 +175,16 @@ def compute_score(
     gamma: float = 0.14,
     beta: float = 0.14,
     max_answer_chars: int = 256,
-    min_diagnosis_words: int = 5,
+    min_reground_chars: int = 1,
 ) -> dict[str, float]:
-    """Compute the paper-aligned ReGround reward and logging components."""
+    """Compute the paper-aligned deterministic reward and log components."""
 
     del data_source
     trajectory = strip_environment_text(solution_str)
     answers = ANSWER_PATTERN.findall(trajectory)
     prediction = answers[-1].strip() if answers else ""
 
-    reground = float(_genuine_reground(trajectory, min_diagnosis_words))
+    reground = float(_structurally_valid_reground(trajectory, min_reground_chars))
     correct = float(answers_match(prediction, ground_truth, extra_info))
     format_ok = float(_format_valid(trajectory, prediction, max_answer_chars))
     format_reward = 0.0 if format_ok else -1.0
@@ -220,7 +201,7 @@ def compute_score(
         "accuracy_component": float(accuracy_component),
         "format_component": float(format_component),
         "trigger_rate": float(has_reground_marker(trajectory)),
-        "genuine_reground": reground,
+        "structural_reground": reground,
         "acc": correct,
         "format_ok": format_ok,
     }

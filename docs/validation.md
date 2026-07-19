@@ -27,10 +27,12 @@ explicitly requested the marker also answered directly. The later full
 HallusionBench run did trigger naturally, so this small probe was not
 representative of the checkpoint's overall trigger behavior.
 
-A pre-release audit of the local training JSONL found 13,149 `<reground>`
-opening tags, no matching closing tags, and 13,148 legacy closing tags. The
-inference trigger depends only on the opening marker, but future dataset
-releases and training runs should normalize the closing tags.
+A pre-release audit of the legacy checkpoint's local SFT JSONL found 13,149
+`<reground>` opening tags, no matching closing tags, and 13,148 legacy closing
+tags. This historical artifact is not the camera-ready data contract: the
+public preparation code emits well-formed tags, and the Stage-2 structural
+indicator now rejects malformed spans. The inference trigger for the validated
+legacy checkpoint depended only on the opening marker.
 
 ## Forced two-round integration test
 
@@ -78,6 +80,6 @@ matching workbook, token log, and per-round output log are retained in ignored
 local output directories.
 
 This full result establishes that the final ReGround checkpoint can trigger and
-complete the natural two-round reground path. The malformed mixed closing tags
-in the training JSONL remain a data-quality issue and should still be corrected
-for a future training run.
+complete the natural two-round reground path. Future training data must follow
+the normalized, well-formed tag contract enforced by the public preparation and
+reward code.

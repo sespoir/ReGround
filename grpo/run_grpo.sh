@@ -94,7 +94,7 @@ python3 -m verl.trainer.main_ppo "${hydra_flags[@]}" \
   +reward.custom_reward_function.reward_kwargs.gamma=0.14 \
   +reward.custom_reward_function.reward_kwargs.beta=0.14 \
   +reward.custom_reward_function.reward_kwargs.max_answer_chars=256 \
-  +reward.custom_reward_function.reward_kwargs.min_diagnosis_words=5 \
+  +reward.custom_reward_function.reward_kwargs.min_reground_chars=1 \
   reward.reward_manager.name=naive \
   reward.num_workers="${REWARD_WORKERS:-32}" \
   trainer.project_name=reground \

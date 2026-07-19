@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Convert generic visual QA records into veRL GRPO parquet files."""
+"""Convert parser-normalized visual QA records into veRL GRPO parquet files.
+
+The answer field is expected to contain the output of the same VLMEvalKit
+dataset parser used for final scoring. This script packages those canonical
+values and accepted aliases; it does not introduce a second benchmark parser.
+"""
 
 from __future__ import annotations
 
@@ -12,7 +17,7 @@ from typing import Any, Iterator
 
 INSTRUCTION = """Solve the visual question with careful reasoning.
 Use <think>...</think> for reasoning and <answer>...</answer> for the final answer.
-If fresh visual evidence is genuinely needed, end the first turn with a concise,
+If visual re-examination is needed, end the first turn with a concise,
 first-person <reground>...</reground> diagnosis instead of an answer."""
 
 
@@ -242,7 +247,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--strict", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--id-field", default="id")
     parser.add_argument("--question-field", default="question")
-    parser.add_argument("--answer-field", default="answer")
+    parser.add_argument(
+        "--answer-field",
+        default="answer",
+        help="Field containing the VLMEvalKit-parser-normalized answer",
+    )
     parser.add_argument("--choices-field", default="choices")
     parser.add_argument("--image-field", default="image")
     parser.add_argument("--source-field", default="source")

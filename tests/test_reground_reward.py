@@ -46,15 +46,42 @@ class ReGroundRewardTest(unittest.TestCase):
         self.assertEqual(result["format_ok"], 0.0)
         self.assertAlmostEqual(result["format_component"], -0.01)
 
-    def test_hollow_marker_is_not_genuine_diagnosis(self) -> None:
-        hollow = f"""<think>short</think>
-<reground>look again</reground>
+    def test_indicator_checks_structure_not_diagnostic_semantics(self) -> None:
+        minimal = f"""<think>short</think>
+<reground>unsure</reground>
 {REGROUND_USER_PROMPT}
 <think>I inspect the image again.</think>
 <answer>15</answer>"""
-        result = compute_score("reground", hollow, "15")
+        result = compute_score("reground", minimal, "15")
         self.assertEqual(result["trigger_rate"], 1.0)
-        self.assertEqual(result["genuine_reground"], 0.0)
+        self.assertEqual(result["structural_reground"], 1.0)
+
+    def test_empty_or_multiple_reground_spans_receive_zero(self) -> None:
+        empty = f"""<think>I inspect the chart.</think>
+<reground></reground>
+{REGROUND_USER_PROMPT}
+<think>I inspect it again.</think>
+<answer>15</answer>"""
+        multiple = f"""{REGROUND_PREFIX}
+<reground>second block</reground>
+{REGROUND_USER_PROMPT}
+<think>I inspect it again.</think>
+<answer>15</answer>"""
+        self.assertEqual(compute_score("reground", empty, "15")["structural_reground"], 0.0)
+        self.assertEqual(
+            compute_score("reground", multiple, "15")["structural_reground"], 0.0
+        )
+
+    def test_padding_does_not_increase_binary_reground_reward(self) -> None:
+        padded = REGROUND_CORRECT.replace(
+            "confirm the count.",
+            "confirm the count with many additional words that do not change the action.",
+        )
+        concise = compute_score("reground", REGROUND_CORRECT, "15")
+        verbose = compute_score("reground", padded, "15")
+        self.assertEqual(concise["structural_reground"], 1.0)
+        self.assertEqual(verbose["structural_reground"], 1.0)
+        self.assertEqual(concise["reground_component"], verbose["reground_component"])
 
     def test_multiple_choice_accepts_label_or_option_text(self) -> None:
         extra = {"choices": ["red", "blue", "green"], "accepted_answers": ["B", "blue"]}

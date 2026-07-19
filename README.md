@@ -1,9 +1,16 @@
 <h2 align="center">ReGround: Restoring Visual Grounding in Multi-Step Reasoning through Self-Diagnosis and Visual Re-Examination</h2>
 
 <p align="center">
+  <a href="mailto:peng.lei@mail.ustc.edu.cn">Lei Peng</a> ·
+  <a href="mailto:shuailv@mail.ustc.edu.cn">Shuai Lv<sup>†</sup></a> ·
+  <a href="mailto:whuustc@ustc.edu.cn">Wei Hu<sup>†</sup></a><br>
+  <sub>† Corresponding authors</sub>
+</p>
+
+<p align="center">
   <a href="https://sespoir.github.io/reground-page/"><img src="https://img.shields.io/badge/%F0%9F%8F%A0%20Home-Project%20Page-FF6F61?style=for-the-badge" alt="Project home page"></a>
   <a href="https://github.com/sespoir/ReGround"><img src="https://img.shields.io/badge/Code-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Code on GitHub"></a>
-  <a href="#-paper"><img src="https://img.shields.io/badge/%F0%9F%93%84%20Paper-Coming%20Soon-6C63FF?style=for-the-badge" alt="Paper: Coming Soon"></a>
+  <a href="https://openreview.net/forum?id=9VITDTpKLk"><img src="https://img.shields.io/badge/%F0%9F%93%84%20Paper-OpenReview-6C63FF?style=for-the-badge" alt="Paper on OpenReview"></a>
   <a href="https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-ReGround-FFD21E?style=for-the-badge" alt="ReGround model on Hugging Face"></a>
 </p>
 
@@ -14,9 +21,9 @@
 
 ## ✨ Overview
 
-Vision-language models can gradually lose visual grounding during long reasoning chains. **ReGround** teaches a model to diagnose when its reasoning needs fresh visual evidence and to selectively re-examine the image.
+Vision-language models can gradually lose visual grounding during long reasoning chains. **ReGround** teaches a model to diagnose when it should selectively re-examine the image.
 
-At inference time, the model emits `<reground>` when re-examination is needed. The same image is then re-injected into the conversation, allowing the model to revise its reasoning before producing the final answer. ReGround requires no external visual tools or architecture changes.
+At inference time, the model emits `<reground>` when re-examination is needed. The same image is then re-injected into the conversation. With a frozen deterministic encoder at inference, identical preprocessing yields identical visual tokens; the benefit comes from re-presenting those tokens at new sequence positions under the updated language context, not from creating fresh embeddings. ReGround requires no external visual tools or architecture changes.
 
 This repository provides data construction, training, inference, and evaluation code for Qwen2.5-VL, built with [veRL](https://github.com/verl-project/verl), [vLLM](https://github.com/vllm-project/vllm), and [VLMEvalKit](https://github.com/open-compass/VLMEvalKit). The final model, trained with Stage-1 SFT followed by Stage-2 GRPO, is available on [Hugging Face](https://huggingface.co/SESPOIR/ReGround-Qwen2.5-VL-7B).
 
@@ -26,7 +33,15 @@ This repository provides data construction, training, inference, and evaluation 
   <img src="assets/reground_method.png" width="100%" alt="Overview of ReGround trajectory construction, model training, and two-round inference">
 </p>
 
-ReGround constructs self-diagnosis trajectories, initializes the policy with supervised fine-tuning, and refines its re-examination decisions with GRPO. At inference time, `<reground>` requests a fresh visual pass before the model produces its final answer.
+ReGround constructs self-diagnosis trajectories, initializes the policy with supervised fine-tuning, and refines its re-examination decisions with GRPO. At inference time, `<reground>` requests that the same visual tokens be re-presented at new sequence positions before the model produces its final answer.
+
+### Camera-ready clarifications
+
+- **Scope.** ReGround targets grounding drift, where a cue redirects attention to a localized region neglected during extended reasoning. It is not a general visual-search or fine-grained-localization method; crop/zoom and token-level refocusing are complementary.
+- **Primary evidence.** Controlled accuracy ablations establish the behavioral effect. Attention entropy and Semantic Alignment Score are supporting mechanism signatures, not direct or causal measures of grounding quality.
+- **Stage-1 judge.** Qwen2.5-VL-72B-Instruct evaluates four routing criteria for correct Round-1 responses: visual-attribute coverage, alternative elimination, absence of hedging, and a concrete visual anchor. It flags 22.9% as ungrounded and is used only for Stage-1 construction—never in GRPO, inference, or benchmark scoring. Human agreement was not measured, so judge bias is a data-composition limitation.
+- **Stage-2 online indicators.** Neither indicator calls a model-based judge. `I_reg` is a binary check for exactly one non-empty, well-formed `<reground>` span at the template position; malformed, empty, or multiple spans receive zero, and padding earns no extra reward. `I_acc` uses answers produced by the same VLMEvalKit parsing stage as final scoring. The repository's `answers_match` helper is only the deterministic post-parser comparison layer, not a separate benchmark parser.
+- **Cost.** Re-injection adds about 518 input tokens per image and grows roughly linearly for multi-image/video inputs. Cue-guided region/token selection and compression are promising extensions.
 
 ## 📈 Results
 
@@ -35,6 +50,8 @@ ReGround constructs self-diagnosis trajectories, initializes the policy with sup
 </p>
 
 <p align="center"><sub>Direct comparison of Qwen2.5-VL-7B methods across eight benchmarks. Each row is scaled to its own min–max range so small gaps stay visible; grey numbers at the ends are absolute scores. Scores follow each benchmark's official evaluation protocol; higher is better.</sub></p>
+
+On the 2,255-sample latency subset, non-triggered cases take 0.95s, triggered cases take 2.31s, and the 31.7% sample-weighted trigger rate yields a 1.39s overall average (baseline: 0.79s; Thyme overall: 2.41s). The roughly 45% trigger rate discussed in the exploration-preference sweep is a separate reward-calibration operating point.
 
 ## 🛠️ Setup
 
@@ -75,7 +92,7 @@ The reported run used 32 A100-80G GPUs. For multi-node reproduction, set the LLa
 
 ## 🧭 GRPO Training
 
-Stage 2 starts from the Stage-1 checkpoint and uses GRPO in [veRL](https://github.com/verl-project/verl). The custom agent loop performs a genuine two-round rollout: when the policy emits `<reground>`, it appends a masked environment turn, re-injects the original image, and lets the same policy finish the trajectory. The reward implements the paper's self-diagnosis, answer-accuracy, and format components, including the four-quadrant values reported in the supplementary material.
+Stage 2 starts from the Stage-1 checkpoint and uses GRPO in [veRL](https://github.com/verl-project/verl). The custom agent loop performs a two-round rollout: when the policy emits `<reground>`, it appends a masked environment turn, re-injects the original image, and lets the same policy finish the trajectory. The deterministic reward implements structural re-grounding, post-VLMEvalKit-parser answer comparison, and format components, including the four-quadrant values reported in the supplementary material.
 
 First convert generic visual-QA records into veRL Parquet files. Field names and answer indexing can be changed with command-line options:
 
@@ -136,7 +153,7 @@ bash scripts/secret_scan.sh
 
 ## 📄 Paper
 
-Coming Soon.
+[OpenReview discussion and accepted submission](https://openreview.net/forum?id=9VITDTpKLk). The camera-ready DOI will be added after ACM Rights Review.
 
 ## 📝 Citation
 
@@ -147,7 +164,7 @@ If you find ReGround useful in your research, please consider citing:
   title     = {ReGround: Restoring Visual Grounding in Multi-Step Reasoning
                through Self-Diagnosis and Visual Re-Examination},
   author    = {Peng, Lei and Lv, Shuai and Hu, Wei},
-  booktitle = {Proceedings of the 34th ACM International Conference on Multimedia (ACM MM '26)},
+  booktitle = {Proceedings of the 35th ACM International Conference on Multimedia (MM '26)},
   year      = {2026},
   note      = {To appear}
 }

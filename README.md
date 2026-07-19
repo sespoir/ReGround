@@ -156,7 +156,7 @@ If you find ReGround useful in your research, please consider citing:
   title     = {ReGround: Restoring Visual Grounding in Multi-Step Reasoning
                through Self-Diagnosis and Visual Re-Examination},
   author    = {Peng, Lei and Lv, Shuai and Hu, Wei},
-  booktitle = {Proceedings of the 35th ACM International Conference on Multimedia (MM '26)},
+  booktitle = {Proceedings of the 34th ACM International Conference on Multimedia (MM '26)},
   year      = {2026},
   note      = {To appear}
 }

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Generate dataset-agnostic ReGround supervised fine-tuning trajectories.
 
-The generator implements the trajectory-construction procedure described in
-the ReGround supplementary material:
+The generator builds trajectories with the following routing:
 
 1. A policy model produces an initial visual observation, reasoning, and answer.
 2. Incorrect answers receive a corrective cue.

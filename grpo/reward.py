@@ -6,11 +6,9 @@ The implementation follows the paper's Stage-2 reward:
         + lambda_acc * (I_acc - gamma * I_reg * I_acc - beta)
         + lambda_form * R_form
 
-where ``R_form`` is -1 for malformed output and 0 otherwise. Both online
-indicators are deterministic: ``I_reg`` checks the trajectory structure, and
-``I_acc`` compares answer values after the same VLMEvalKit parsing stage used
-for final scoring. With the supplementary hyperparameters, the four
-valid-format quadrants round to 1.0, 0.6, 0.4, and -0.1.
+where ``R_form`` is -1 for malformed output and 0 otherwise. With the
+supplementary hyperparameters, the four valid-format quadrants round to 1.0,
+0.6, 0.4, and -0.1.
 """
 
 from __future__ import annotations
@@ -63,12 +61,7 @@ def _format_valid(text: str, answer: str, max_answer_chars: int) -> bool:
 
 
 def _structurally_valid_reground(text: str, min_reground_chars: int) -> bool:
-    """Check one non-empty reground span at the template-defined position.
-
-    This intentionally does not score diagnostic semantics. The SFT prior and
-    KL anchor supply that behavior; the online indicator is binary, so longer
-    or padded content receives no additional reward.
-    """
+    """Return True for exactly one non-empty reground span in the triggered layout."""
 
     if _tag_sequence(text) != TRIGGERED_TAG_SEQUENCE:
         return False
@@ -132,11 +125,8 @@ def _choice_label(value: Any, choices: list[Any]) -> str | None:
 def answers_match(prediction: str, ground_truth: Any, extra_info: dict[str, Any] | None = None) -> bool:
     """Compare prediction and target after VLMEvalKit answer parsing.
 
-    Dataset-specific extraction and normalization are performed by the same
-    VLMEvalKit parser used for final scoring before values enter the reward
-    pipeline. This helper is the deterministic post-parser comparison layer,
-    not a second benchmark parser and not a learned judge. It preserves
-    canonical choice aliases and numeric equivalence in the prepared records.
+    Handles canonical choice aliases and numeric equivalence in the prepared
+    records.
     """
 
     extra_info = extra_info or {}
